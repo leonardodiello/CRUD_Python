@@ -8,3 +8,6 @@ cursor.execute(comando)
 
 resultado = cursor.fetchall()
 print(resultado)
+
+cursor.close()
+conexao.close()
