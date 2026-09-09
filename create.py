@@ -1,6 +1,5 @@
 from conexao import conectar
 
-
 conexao = conectar()
 cursor = conexao.cursor()
 
