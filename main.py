@@ -12,10 +12,13 @@ conexao = mysql.connector.connect(
     database=os.getenv("DB_NAME"),
 )
 
-
 cursor = conexao.cursor()
 
-
+nome_produto = "Água"
+valor = 2
+comando = f'INSERT INTO vendas (nome_produto, valor) VALUES ("{nome_produto}", {valor})'
+cursor.execute(comando)
+conexao.commit()
 
 #cursor.close()
 #conexao.close()
