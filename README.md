@@ -1,83 +1,129 @@
 # CRUD Python + MySQL
 
 [![Python](https://img.shields.io/badge/Python-3.x-3776AB?style=for-the-badge\&logo=python\&logoColor=white)](https://www.python.org/)
+[![Flask](https://img.shields.io/badge/Flask-Web%20Framework-000000?style=for-the-badge\&logo=flask\&logoColor=white)](https://flask.palletsprojects.com/)
 [![MySQL](https://img.shields.io/badge/MySQL-Database-4479A1?style=for-the-badge\&logo=mysql\&logoColor=white)](https://www.mysql.com/)
 [![python-dotenv](https://img.shields.io/badge/python--dotenv-Environment%20Variables-3776AB?style=for-the-badge\&logo=python\&logoColor=white)](https://pypi.org/project/python-dotenv/)
 [![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge\&logo=github\&logoColor=white)](https://github.com/leonardodiello/CRUD_Python)
 
-CRUD desenvolvido em **Python** integrado ao **MySQL**, com o objetivo de praticar operações básicas de manipulação de dados em um banco de dados relacional.
+## Sobre o projeto
 
-O projeto implementa as quatro operações fundamentais de um CRUD:
+CRUD desenvolvido em **Python**, utilizando **Flask** para a aplicação web e **MySQL** para armazenamento dos dados.
 
-* **Create** — Inserção de registros.
-* **Read** — Consulta de registros.
-* **Update** — Atualização de registros.
-* **Delete** — Exclusão de registros.
+O projeto foi desenvolvido com o objetivo de praticar a integração entre uma aplicação web e um banco de dados relacional, implementando as quatro operações fundamentais de um CRUD:
+
+* **Create** — Inserção de registros
+* **Read** — Consulta de registros
+* **Update** — Atualização de registros
+* **Delete** — Exclusão de registros
+
+Além da parte de banco de dados, o projeto possui uma interface web desenvolvida com **HTML e CSS**, integrada ao backend através do Flask.
 
 ## Tecnologias utilizadas
 
-* Python.
-* MySQL.
-* MySQL Connector/Python.
-* python-dotenv.
+* **Python**
+* **Flask**
+* **MySQL**
+* **MySQL Connector/Python**
+* **python-dotenv**
+* **HTML**
+* **CSS**
+* **Jinja2**
+
+## Funcionalidades
+
+* Cadastro de produtos
+* Listagem dos produtos cadastrados
+* Atualização do valor de um produto
+* Exclusão de produtos
+* Integração entre Flask e MySQL
+* Interface web para interação com o banco de dados
+* Utilização de variáveis de ambiente para configuração do banco
 
 ## Estrutura do projeto
 
 ```text
 CRUD_Python/
 │
+├── static/
+│   └── arquivos estáticos
+│
+├── templates/
+│   └── index.html
+│
+├── app.py
 ├── conexao.py
-├── create.py
-├── read.py
-├── update.py
-├── delete.py
-├── .env
-└── .gitignore
+├── .gitignore
+└── README.md
 ```
 
-### `conexao.py`
+### Principais arquivos
+
+**`app.py`**
+
+Arquivo principal da aplicação Flask. É responsável pelas rotas e pelas operações do CRUD.
+
+As principais rotas são:
+
+```text
+/              → Lista os produtos
+/create        → Cadastra um produto
+/update/<id>   → Atualiza o valor de um produto
+/delete/<id>   → Exclui um produto
+```
+
+**`conexao.py`**
 
 Responsável por estabelecer a conexão entre a aplicação Python e o banco de dados MySQL.
 
-As credenciais são obtidas por meio de variáveis de ambiente utilizando `python-dotenv`.
+**`templates/`**
 
-### `create.py`
+Armazena os templates HTML utilizados pela aplicação.
 
-Responsável pela criação de novos registros na tabela `vendas`.
+**`static/`**
 
-### `read.py`
+Armazena os arquivos estáticos utilizados pela interface, como arquivos CSS e JavaScript.
 
-Responsável pela consulta dos registros armazenados no banco de dados.
+## Funcionamento
 
-### `update.py`
-
-Responsável pela atualização de informações existentes na tabela `vendas`.
-
-### `delete.py`
-
-Responsável pela exclusão de registros na tabela `vendas`.
-
-## Como funciona
-
-O projeto utiliza uma tabela chamada `vendas` para armazenar os dados.
-
-As operações são executadas diretamente através de comandos SQL enviados pelo Python ao MySQL.
-
-O fluxo básico é:
+A aplicação segue um fluxo simples:
 
 ```text
-Python
-   │
-   ▼
-conexao.py
-   │
-   ▼
-MySQL
-   │
-   ├── CREATE
-   ├── READ
-   ├── UPDATE
-   └── DELETE
+                  Interface Web
+                       │
+                       ▼
+                  ┌─────────┐
+                  │  Flask  │
+                  └────┬────┘
+                       │
+                       ▼
+                  ┌──────────┐
+                  │ conexao  │
+                  │   .py    │
+                  └────┬─────┘
+                       │
+                       ▼
+                  ┌─────────┐
+                  │  MySQL  │
+                  └────┬─────┘
+                       │
+             ┌─────────┼─────────┐
+             ▼         ▼         ▼
+           CREATE     READ     UPDATE
+                                  │
+                                  ▼
+                                DELETE
+```
+
+As operações de inserção e atualização utilizam parâmetros na consulta SQL.
+
+Exemplo:
+
+```python
+cursor.execute(
+    'INSERT INTO vendas (nome_produto, valor) VALUES (%s, %s)',
+    (nome_produto, valor)
+)
 ```
 
 ## Configuração
@@ -86,38 +132,29 @@ MySQL
 
 ```bash
 git clone https://github.com/leonardodiello/CRUD_Python.git
-```
-
-Entre na pasta:
-
-```bash
 cd CRUD_Python
 ```
 
 ### 2. Crie um ambiente virtual
 
+No macOS/Linux:
+
 ```bash
 python3 -m venv .venv
-```
-
-Ative o ambiente virtual:
-
-**macOS/Linux:**
-
-```bash
 source .venv/bin/activate
 ```
 
-**Windows:**
+No Windows:
 
 ```bash
+python -m venv .venv
 .venv\Scripts\activate
 ```
 
 ### 3. Instale as dependências
 
 ```bash
-pip install mysql-connector-python python-dotenv
+pip install Flask mysql-connector-python python-dotenv
 ```
 
 ### 4. Configure as variáveis de ambiente
@@ -131,117 +168,101 @@ DB_PASSWORD=sua_senha
 DB_NAME=seu_banco
 ```
 
-O arquivo `.env` não deve ser enviado para o GitHub, pois contém informações sensíveis de acesso ao banco de dados.
+> O arquivo `.env` não deve ser enviado para o GitHub. Utilize o `.gitignore` para manter as credenciais fora do repositório.
 
-### 5. Configure o banco de dados
+### 5. Crie o banco de dados
 
-Crie o banco de dados no MySQL:
+Exemplo de estrutura utilizada pelo projeto:
 
 ```sql
 CREATE DATABASE crud_python;
-```
 
-Depois, selecione o banco:
-
-```sql
 USE crud_python;
-```
 
-Crie a tabela utilizada pelo projeto:
-
-```sql
 CREATE TABLE vendas (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    idVendas INT AUTO_INCREMENT PRIMARY KEY,
     nome_produto VARCHAR(100) NOT NULL,
     valor DECIMAL(10, 2) NOT NULL
 );
 ```
 
-Atualize o arquivo `.env`:
+### 6. Execute a aplicação
 
-```env
-DB_HOST=localhost
-DB_USER=seu_usuario
-DB_PASSWORD=sua_senha
-DB_NAME=crud_python
+```bash
+python app.py
 ```
 
-## Executando o projeto
+Com o servidor iniciado, acesse a aplicação pelo endereço exibido no terminal.
 
-Cada operação do CRUD está separada em seu próprio arquivo.
+Durante o desenvolvimento, o projeto utiliza o modo `debug` do Flask. Esse modo deve ser utilizado apenas no ambiente de desenvolvimento.
+
+## Fluxo das operações
 
 ### Create
 
-Para inserir um novo registro:
-
-```bash
-python create.py
-```
+O usuário preenche o formulário com o nome e o valor do produto. O Flask recebe os dados através de `request.form` e realiza um `INSERT` na tabela `vendas`.
 
 ### Read
 
-Para consultar os registros:
-
-```bash
-python read.py
-```
+Ao acessar a página inicial, a aplicação executa um `SELECT` na tabela `vendas` e envia os registros para o template HTML.
 
 ### Update
 
-Para atualizar um registro:
+O usuário informa um novo valor para o produto. A aplicação utiliza o **`idVendas`** do registro para executar um `UPDATE`.
 
-```bash
-python update.py
+```sql
+UPDATE vendas
+SET valor = %s
+WHERE idVendas = %s;
 ```
 
 ### Delete
 
-Para excluir um registro:
+A aplicação utiliza o **`idVendas`** do produto para executar um `DELETE`.
 
-```bash
-python delete.py
+```sql
+DELETE FROM vendas
+WHERE idVendas = %s;
 ```
 
-## Conceito de CRUD
+Após as operações de alteração, o Flask redireciona o usuário para a página principal.
 
-CRUD é um acrônimo para as quatro operações fundamentais utilizadas na manipulação de dados:
+## Objetivos do projeto
 
-| Operação | SQL      | Descrição                      |
-| -------- | -------- | ------------------------------ |
-| Create   | `INSERT` | Cria um novo registro.         |
-| Read     | `SELECT` | Consulta registros.            |
-| Update   | `UPDATE` | Atualiza registros existentes. |
-| Delete   | `DELETE` | Remove registros.              |
+Este projeto foi desenvolvido para praticar:
 
-## Objetivo do projeto
-
-Este projeto foi desenvolvido com foco no aprendizado de:
-
-* Integração entre Python e MySQL.
-* Conexão com banco de dados.
-* Execução de comandos SQL através do Python.
-* Manipulação de registros.
-* Utilização de variáveis de ambiente.
-* Organização de operações CRUD em diferentes módulos.
+* Desenvolvimento web com Python
+* Utilização do framework Flask
+* Criação de rotas
+* Manipulação de requisições HTTP
+* Renderização de templates HTML
+* Integração entre Python e MySQL
+* Consultas SQL
+* Operações CRUD
+* Utilização de variáveis de ambiente
+* Organização básica de uma aplicação web
 
 ## Próximos passos
 
 Algumas melhorias que podem ser implementadas futuramente:
 
-* Criar uma interface de usuário.
-* Implementar um menu interativo no terminal.
-* Utilizar consultas parametrizadas para aumentar a segurança.
-* Adicionar tratamento de exceções.
-* Implementar validação dos dados.
-* Utilizar classes para organizar o acesso ao banco.
-* Criar uma API utilizando FastAPI.
-* Adicionar testes automatizados.
-* Implementar `requirements.txt` ou `pyproject.toml`.
+* Melhorar a interface da aplicação
+* Adicionar validação dos dados recebidos
+* Implementar tratamento de exceções
+* Criar mensagens de sucesso e erro
+* Separar melhor a camada de acesso ao banco de dados
+* Adicionar testes automatizados
+* Criar `requirements.txt`
+* Estruturar o projeto utilizando Blueprints
+* Adicionar autenticação de usuários
+* Criar uma API REST com Flask ou FastAPI
+* Containerizar a aplicação com Docker
 
 ## Autor
 
 **Leonardo Diello Charão**
 
-Estudante de Engenharia de Software.
+Estudante de Engenharia de Software no IFAM.
 
-GitHub: [leonardodiello](https://github.com/leonardodiello)
+* GitHub: [@leonardodiello](https://github.com/leonardodiello)
+* Projeto: [CRUD_Python](https://github.com/leonardodiello/CRUD_Python)
