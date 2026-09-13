@@ -1,9 +1,37 @@
 {% extends 'base.html' %}
 
 {% block head %}
-
 {% endblock %}
 
 {% block body %}
-<h1>Template</h1>
+<h1>Vendas</h1>
+
+<form action="{{ url_for('create') }}" method="POST">
+    <input type="text" name="nome_produto" placeholder="Nome do produto" required>
+    <input type="number" step="0.01" name="valor" placeholder="Valor" required>
+    <button type="submit">Cadastrar</button>
+</form>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Produto</th>
+        <th>Valor</th>
+        <th>Ações</th>
+    </tr>
+    {% for venda in vendas %}
+    <tr>
+        <td>{{ venda[0] }}</td>
+        <td>{{ venda[1] }}</td>
+        <td>{{ venda[2] }}</td>
+        <td>
+            <form action="{{ url_for('update', id=venda[0]) }}" method="POST" style="display:inline">
+                <input type="number" step="0.01" name="valor" placeholder="Novo valor" required>
+                <button type="submit">Atualizar</button>
+            </form>
+            <a href="{{ url_for('delete', id=venda[0]) }}">Excluir</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
 {% endblock %}
