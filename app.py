@@ -39,7 +39,7 @@ def update(id):
     conexao = conectar()
     cursor = conexao.cursor()
     cursor.execute(
-        'UPDATE vendas SET valor = %s WHERE id = %s',
+        'UPDATE vendas SET valor = %s WHERE idVendas = %s',
         (valor, id)
     )
     conexao.commit()
@@ -52,7 +52,7 @@ def update(id):
 def delete(id):
     conexao = conectar()
     cursor = conexao.cursor()
-    cursor.execute('DELETE FROM vendas WHERE id = %s', (id,))
+    cursor.execute('DELETE FROM vendas WHERE idVendas = %s', (id,))
     conexao.commit()
     cursor.close()
     conexao.close()
